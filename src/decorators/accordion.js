@@ -3,6 +3,7 @@ import React from 'react'
 export default function (Component) {
     return class AccordionComponent extends React.Component {
         state = {
+            //Не привязывайся к названию сущности, декоратор будет использоваться везде. Назови, скажем, openItemId
             openArticleId: null
         }
 
@@ -12,6 +13,7 @@ export default function (Component) {
 
         accordionOpen = id => ev => {
             console.log(id, this.state.openArticleId);
+            //хорошо, но можно проще тернарным оператором
             if(id == this.state.openArticleId) {
                 this.setState({
                     openArticleId: null
