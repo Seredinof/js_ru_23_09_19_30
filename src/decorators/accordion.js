@@ -1,29 +1,17 @@
-import React from 'react'
+import React, { Component as ReactComponent} from 'react'
 
-export default function (Component) {
-    return class AccordionComponent extends React.Component {
-        state = {
-            //Не привязывайся к названию сущности, декоратор будет использоваться везде. Назови, скажем, openItemId
-            openArticleId: null
-        }
+export default (Component) => class Accordion extends ReactComponent {
+    state = {
+        openItemId: null
+    }
 
-        render() {
-            return <Component {...this.props} {...this.state} accordionOpen = {this.accordionOpen}/>
-        }
+    toggleItem = id => ev => this.setState({
+        openItemId: this.isItemOpen(id) ? null : id
+    })
 
-        accordionOpen = id => ev => {
-            console.log(id, this.state.openArticleId);
-            //хорошо, но можно проще тернарным оператором
-            if(id == this.state.openArticleId) {
-                this.setState({
-                    openArticleId: null
-                })
-            } else {
-                this.setState({
-                    openArticleId: id
-                })
-            }
+    isItemOpen = id => this.state.openItemId == id
 
-        }
+    render() {
+        return <Component {...this.props} toggleItem = {this.toggleItem} isItemOpen = {this.isItemOpen}/>
     }
 }
