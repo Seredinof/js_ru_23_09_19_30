@@ -34,6 +34,7 @@ export default class Calendar extends React.Component {
             <div>
                 { !from && !to && <p>Выберите <strong>первый день</strong>.</p> }
                 { from && !to && <p>Выберите <strong>последний день</strong>.</p> }
+                {/*Не пиши столько кода в JSX*/}
                 { from && to &&
                 <p>
                     В выбрали от { moment(from).format('L') } до { moment(to).format('L') }.
