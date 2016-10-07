@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import Select from 'react-select'
 import 'react-select/dist/react-select.css'
+import Calendar from './Calendar'
 
 class Filter extends Component {
     static propTypes = {
@@ -28,6 +29,7 @@ class Filter extends Component {
                     multi = {true}
                     onChange = {this.handleChange}
                 />
+                <Calendar />
             </div>
         )
     }
