@@ -1,8 +1,8 @@
-import {INCREMENT} from '../constants'
+import { INCREMENT } from '../constants'
 
-export function increment (){
+export function increment() {
     const action = {
         type: INCREMENT
     }
-    return action;
+    return action
 }

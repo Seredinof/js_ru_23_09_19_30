@@ -20,16 +20,13 @@ class SelectFilter extends Component {
             label: article.title,
             value: article.id
         }))
-        return (
-            <div>
-                <Select
-                    options = {options}
-                    value = {selected}
-                    multi = {true}
-                    onChange = {this.handleChange}
-                />
-            </div>
-        )
+
+        return <Select
+            options={options}
+            value={selected}
+            multi={true}
+            onChange={this.handleChange}
+        />
     }
 }
 

@@ -1,19 +1,20 @@
 import React, { Component, PropTypes } from 'react'
+import DatePicker from './DatePicker'
 import SelectFilter from './SelectFilter'
-import 'react-select/dist/react-select.css'
-import Calendar from './Calendar'
 
-class Filters extends Component {
+class Filter extends Component {
+    static propTypes = {
+        articles: PropTypes.array.isRequired
+    };
 
     render() {
-
         return (
             <div>
-                <Calendar />
-                <SelectFilter articles = {this.props.articles}/>
+                <DatePicker />
+                <SelectFilter articles = {this.props.articles} />
             </div>
         )
     }
 }
 
-export default Filters
+export default Filter

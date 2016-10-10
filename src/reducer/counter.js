@@ -1,4 +1,5 @@
-import {INCREMENT} from '../constants'
-export default function countReducer (count = 0, action) {
-    return action.type == INCREMENT ? count +1 : count
+import { INCREMENT } from '../constants'
+
+export default (count = 0, action) => {
+    return action.type == INCREMENT ? count + 1 : count
 }
