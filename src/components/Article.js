@@ -3,24 +3,26 @@ import { findDOMNode } from 'react-dom'
 import CommentList from './CommentList'
 import CSSTransition from 'react-addons-css-transition-group'
 import './animation.css'
+import {connect} from 'react-redux'
+import { deleteArticle } from '../AC/articles'
 
-export default class Article extends Component {
+class Article extends Component {
     static propTypes = {
         article: PropTypes.object.isRequired,
         isOpen: PropTypes.bool.isRequired,
         openArticle: PropTypes.func.isRequired
     }
 
-/*
-    shouldComponentUpdate(nextProps, nextState) {
-        return (this.props.isOpen != nextProps.isOpen)
-    }
+    /*
+     shouldComponentUpdate(nextProps, nextState) {
+     return (this.props.isOpen != nextProps.isOpen)
+     }
 
 
-    componentDidUpdate() {
-        console.log('---', findDOMNode(this.refs.commentList))
-    }
-*/
+     componentDidUpdate() {
+     console.log('---', findDOMNode(this.refs.commentList))
+     }
+     */
 
     render() {
         const { article, isOpen, openArticle } = this.props
@@ -30,6 +32,7 @@ export default class Article extends Component {
         return (
             <div>
                 <h3 onClick = {openArticle}>{article.title}</h3>
+                <a href="#" onClick={this.handleDelete}>delete me</a>
                 <CSSTransition
                     transitionName="article"
                     transitionEnterTimeout={500}
@@ -40,4 +43,12 @@ export default class Article extends Component {
             </div>
         )
     }
+
+    handleDelete = (ev) => {
+        ev.preventDefault()
+        const {article, deleteArticle} = this.props
+        deleteArticle(article.id)
+    }
 }
+
+export default connect(null, { deleteArticle })(Article)
