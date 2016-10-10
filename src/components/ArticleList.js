@@ -16,7 +16,7 @@ class ArticleList extends Component {
 
         let articleComponents;
         let filterArticles = articles;
-
+        //лучше всю эту логико по фильтрации оставить в коннекте
         if(selected != undefined && selected.length) {
 
             filterArticles = filterArticles.filter(function(article) {
@@ -28,7 +28,7 @@ class ArticleList extends Component {
 
         //console.log(range)
         const {from, to} = range;
-
+        
         if(from && to) {
             filterArticles = filterArticles.filter(article => {
                 const article_date = Date.parse(article.date);
