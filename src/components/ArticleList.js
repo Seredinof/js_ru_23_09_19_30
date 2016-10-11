@@ -12,35 +12,12 @@ class ArticleList extends Component {
     };
 
     render() {
-        const { articles, toggleItem, isItemOpen, selected, range } = this.props
+        const { articles, toggleItem, isItemOpen } = this.props
 
-        let articleComponents;
-        let filterArticles = articles;
-        //лучше всю эту логико по фильтрации оставить в коннекте
-        if(selected != undefined && selected.length) {
-
-            filterArticles = filterArticles.filter(function(article) {
-                return selected.some(function(item){
-                    return item.value == article.id
-                })
-            });
-        }
-
-        //console.log(range)
-        const {from, to} = range;
-        
-        if(from && to) {
-            filterArticles = filterArticles.filter(article => {
-                const article_date = Date.parse(article.date);
-                return article_date > Date.parse(from) && article_date < Date.parse(to);
-            })
-        }
-
-        articleComponents = filterArticles.map(article => (
+        const articleComponents = articles.map(article => (
             <li key={article.id} >
                 <Article article = {article} isOpen = {isItemOpen(article.id)} openArticle = {toggleItem(article.id)} />
             </li>))
-
 
         return (
             <ul>
@@ -50,8 +27,14 @@ class ArticleList extends Component {
     }
 }
 
-export default connect(state => ({
-    articles: state.articles,
-    selected: state.selected,
-    range: state.range
-}))(accordion(ArticleList))
+export default connect(state => {
+    const { articles, filters: { selected, dateRange: { from, to } } } = state
+    const filteredArticles = articles.filter(article => {
+        const published = Date.parse(article.date)
+        return (!selected.length || selected.includes(article.id)) &&
+            (!from || !to || (published > from && published < to))
+    })
+    return {
+        articles: filteredArticles
+    }
+})(accordion(ArticleList))
