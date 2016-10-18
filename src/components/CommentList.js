@@ -9,13 +9,13 @@ function CommentList(props) {
 
     const commentItems = comments.map(comment => <li key={comment.id}><Comment comment={comment}/></li>)
     const text = isOpen ? 'hide comments' : `show ${comments.length} comments`
-    const body = isOpen && <div><ul>{commentItems}</ul><NewCommentForm /></div>
+    const body = isOpen && <div><ul>{commentItems}</ul></div>
 
     return (
         <div>
             <a href="#" onClick={toggleOpen}>{text}</a>
             {body}
-            <NewCommentForm/>
+            <NewCommentForm articleId = {props.articleId} />
         </div>
     )
 }
