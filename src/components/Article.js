@@ -28,11 +28,11 @@ class Article extends Component {
     render() {
         const { article, comments, isOpen, openArticle } = this.props
 
-        const body = isOpen ? <section>{article.text}<CommentList comments = {comments} articleId = {article.id} ref = "commentList"/></section> : null
+        const body = isOpen ? <section>{article.get('text')}<CommentList comments = {comments} articleId = {article.get('id')} ref = "commentList"/></section> : null
 
         return (
             <div>
-                <h3 onClick = {openArticle}>{article.title}</h3>
+                <h3 onClick = {openArticle}>{article.get('title')}</h3>
                 <a href = "#" onClick = {this.handleDelete}>delete me</a>
                 <CSSTransition
                     transitionName="article"
@@ -48,7 +48,7 @@ class Article extends Component {
     handleDelete = (ev) => {
         ev.preventDefault()
         const { article, deleteArticle } = this.props
-        deleteArticle(article.id)
+        deleteArticle(article.get('id'))
     }
 }
 

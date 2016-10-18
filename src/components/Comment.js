@@ -1,10 +1,10 @@
 import React, { PropTypes } from 'react'
 
 function Comment(props) {
-    const { text, user } = props.comment
+
     return (
         <p>
-            {text} <strong>by {user}</strong>
+            {props.comment.get('text')} <strong>by {props.comment.get('user')}</strong>
         </p>
     )
 }

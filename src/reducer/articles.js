@@ -1,8 +1,11 @@
 import { normalizedArticles } from '../fixtures'
 import { DELETE_ARTICLE, ADD_COMMENT } from '../constants'
 import { arrayToMap } from '../store/helpers'
+import { Record } from 'immutable'
 
-export default (articles = arrayToMap(normalizedArticles), action) => {
+const ArticleRecord = Record({id: '', date: '', title: '', text: '', comments: []});
+
+export default (articles = arrayToMap(normalizedArticles, ArticleRecord), action) => {
     const { type, payload } = action
 
     switch (type) {
@@ -11,9 +14,8 @@ export default (articles = arrayToMap(normalizedArticles), action) => {
         case ADD_COMMENT: {
             const { articleId, id } = payload
             const article = articles[articleId]
-            return Object.assign(articles, {
-                [articleId]: {...article, comments: article.comments.concat(id)}
-            })
+            console.log(article);
+            return { ...articles, [articleId]: article.set('comments', article.comments.concat(id)) }
         }
     }
 
