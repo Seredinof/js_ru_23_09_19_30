@@ -1,8 +1,11 @@
 import { ADD_COMMENT } from '../constants'
 
-export function addComment(user, text, articleId) {
+export function addComment(comment, articleId) {
     return {
         type: ADD_COMMENT,
-        payload: { user, text, articleId }
+        payload: {
+            articleId, comment
+        },
+        generateId: true
     }
 }

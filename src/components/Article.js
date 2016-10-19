@@ -3,9 +3,9 @@ import { findDOMNode } from 'react-dom'
 import CommentList from './CommentList'
 import CSSTransition from 'react-addons-css-transition-group'
 import './animation.css'
-import { deleteArticle } from '../AC/articles'
+import { deleteArticle, loadArticle } from '../AC/articles'
 import { connect } from 'react-redux'
-import { getRelation } from '../store/helpers'
+import Loader from './Loader'
 
 class Article extends Component {
     static propTypes = {
@@ -14,25 +14,20 @@ class Article extends Component {
         openArticle: PropTypes.func.isRequired
     }
 
-/*
-    shouldComponentUpdate(nextProps, nextState) {
-        return (this.props.isOpen != nextProps.isOpen)
+    componentWillUpdate(nextProps) {
+        const { article: { id, text, loading }, isOpen, loadArticle } = this.props
+        if (nextProps.isOpen && !isOpen && !text && !loading) loadArticle(id)
     }
-
-
-    componentDidUpdate() {
-        console.log('---', findDOMNode(this.refs.commentList))
-    }
-*/
 
     render() {
-        const { article, comments, isOpen, openArticle } = this.props
+        const { article, isOpen, openArticle } = this.props
+        const loader = article.loading ? <Loader /> : null
 
-        const body = isOpen ? <section>{article.get('text')}<CommentList comments = {comments} articleId = {article.get('id')} ref = "commentList"/></section> : null
+        const body = isOpen ? <section>{loader}{article.text}<CommentList article = {article} ref = "commentList"/></section> : null
 
         return (
             <div>
-                <h3 onClick = {openArticle}>{article.get('title')}</h3>
+                <h3 onClick = {openArticle}>{article.title}</h3>
                 <a href = "#" onClick = {this.handleDelete}>delete me</a>
                 <CSSTransition
                     transitionName="article"
@@ -48,10 +43,8 @@ class Article extends Component {
     handleDelete = (ev) => {
         ev.preventDefault()
         const { article, deleteArticle } = this.props
-        deleteArticle(article.get('id'))
+        deleteArticle(article.id)
     }
 }
 
-export default connect((state, props) => ({
-    comments: getRelation(props.article, 'comments', state)
-}), { deleteArticle })(Article)
+export default connect(null, { deleteArticle, loadArticle })(Article)
